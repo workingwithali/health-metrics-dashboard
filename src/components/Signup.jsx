@@ -46,16 +46,32 @@ const SwitchLink = styled.p`
   cursor: pointer;
 `;
 
+const ImagePreview = styled.img`
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 15px;
+`;
+
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
+  const [preview, setPreview] = useState(null);
   const navigate = useNavigate();
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setProfileImage(file);
+    setPreview(URL.createObjectURL(file));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-      // Registration logic here
+      // Registration logic here, including uploading the profile image
 
       navigate('/dashboard');
     } else {
@@ -67,6 +83,12 @@ const Signup = () => {
     <SignupContainer>
       <Form onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
+        {preview && <ImagePreview src={preview} alt="Profile Preview" />}
+        <Input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
         <Input
           type="email"
           placeholder="Email"
