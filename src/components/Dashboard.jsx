@@ -8,6 +8,13 @@ import Suggestions from './Suggestions';
 import DietExercisePlan from './DietExercisePlan';
 import HealthInput from './HealthInput';
 
+const ProfileImage = styled.img`
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 20px;
+`;
 const DashboardContainer = styled.div`
   background-color: #f9f9f9;
   min-height: 100vh;
@@ -27,6 +34,7 @@ const AdditionalInfoContainer = styled.div`
 `;
 
 const Dashboard = () => {
+  const userProfileImage = "https://your-image-url.com/image.jpg";
   const [healthData, setHealthData] = useState({
     heartRate: 85,
     oxygenLevel: 92,
@@ -58,7 +66,10 @@ const Dashboard = () => {
   };
 
   return (
-    <DashboardContainer>
+     <div>
+      <ProfileImage src={userProfileImage} alt="Profile" />
+      <h1>Welcome to the Dashboard</h1>
+      <DashboardContainer>
       <Header />
         <HealthInput onSubmit={handleHealthInputSubmit} />
       <MetricsContainer>
@@ -75,6 +86,8 @@ const Dashboard = () => {
 
       <Footer timestamp="10:30 AM, Aug 20, 2024" deviceStatus="Connected" />
     </DashboardContainer>
+    </div>
+    
   );
 };
 
