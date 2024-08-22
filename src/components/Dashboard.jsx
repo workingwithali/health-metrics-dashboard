@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Header from './Header';
 import MetricsCard from './MetricsCard';
@@ -6,6 +6,7 @@ import Footer from './Footer';
 import History from './History';
 import Suggestions from './Suggestions';
 import DietExercisePlan from './DietExercisePlan';
+import HealthInput from './HealthInput';
 
 const DashboardContainer = styled.div`
   background-color: #f9f9f9;
@@ -26,10 +27,14 @@ const AdditionalInfoContainer = styled.div`
 `;
 
 const Dashboard = () => {
+  const [healthData, setHealthData] = useState({
+    heartRate: 85,
+    oxygenLevel: 92,
+  });
+
   const heartRateData = [72, 75, 80, 78, 77, 76, 80, 85, 90];
   const oxygenLevelData = [95, 94, 96, 97, 96, 95, 94, 93, 92];
 
-  // Sample Data for History, Suggestions, Diet & Exercise Plan
   const historyData = [
     { date: '2024-08-19', heartRate: 82, oxygenLevels: 94 },
     { date: '2024-08-18', heartRate: 78, oxygenLevels: 95 },
@@ -45,12 +50,20 @@ const Dashboard = () => {
   const dietPlan = 'Breakfast: Oats with fruit. Lunch: Grilled chicken with salad. Dinner: Steamed vegetables and fish.';
   const exercisePlan = 'Morning: 30 minutes of jogging. Evening: 20 minutes of yoga.';
 
+  const handleHealthInputSubmit = (inputData) => {
+    setHealthData({
+      heartRate: inputData.heartRate,
+      oxygenLevel: inputData.oxygenLevel,
+    });
+  };
+
   return (
     <DashboardContainer>
       <Header />
+        <HealthInput onSubmit={handleHealthInputSubmit} />
       <MetricsContainer>
-        <MetricsCard title="Heart Rate (bpm)" value={85} data={heartRateData} warningThreshold={100} />
-        <MetricsCard title="Oxygen Levels (SpO2)" value={92} data={oxygenLevelData} warningThreshold={90} />
+        <MetricsCard title="Heart Rate (bpm)" value={healthData.heartRate} data={heartRateData} warningThreshold={100} />
+        <MetricsCard title="Oxygen Levels (SpO2)" value={healthData.oxygenLevel} data={oxygenLevelData} warningThreshold={90} />
         {/* Add additional metrics here */}
       </MetricsContainer>
 
